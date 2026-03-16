@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XsSpekter GitHub Repository Oluştur</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .button { background: #28a745; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 0; }
+        .step { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>XsSpekter GitHub Repository Oluştur</h1>
+        
+        <div class="step">
+            <h3>Adım 1: Repository Oluştur</h3>
+            <p>Aşağıdaki butona tıklayarak GitHub'da XsSpekter repository'sini oluşturun:</p>
+            <a href="https://github.com/new?template_name=&template_owner=&name=XsSpekter&description=XsSpekter%20-%20Security%20Analysis%20Android%20App&visibility=public" class="button">GitHub'da Repository Oluştur</a>
+        </div>
+        
+        <div class="step">
+            <h3>Adım 2: Projeyi Yükle</h3>
+            <p>Repository oluşturduktan sonra aşağıdaki butona tıklayarak projeyi yükleyin:</p>
+            <button onclick="uploadProject()" class="button">Projeyi GitHub'a Yükle</button>
+        </div>
+        
+        <div id="result"></div>
+    </div>
+    
+    <script>
+        function uploadProject() {
+            document.getElementById('result').innerHTML = '<p>Proje yükleniyor... Lütfen bekleyin.</p>';
+            
+            fetch('upload_to_github.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({repo: 'XsSpekter', username: 'fuatgulenoglu922-prog'})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = 
+                    '<h3>✅ Yükleme Tamamlandı!</h3>' +
+                    '<p>Projeniz: <a href="https://github.com/fuatgulenoglu922-prog/XsSpekter" target="_blank">https://github.com/fuatgulenoglu922-prog/XsSpekter</a></p>';
+            })
+            .catch(error => {
+                document.getElementById('result').innerHTML = 
+                    '<p style="color: red;">❌ Hata: ' + error.message + '</p>' +
+                    '<p>Lütfen manuel olarak yükleyin.</p>';
+            });
+        }
+    </script>
+</body>
+</html>
